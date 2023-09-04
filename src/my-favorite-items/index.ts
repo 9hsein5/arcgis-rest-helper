@@ -1,8 +1,11 @@
-// import { ArcGISIdentityManager  } from '@esri/arcgis-rest-request';
+import { ArcGISIdentityManager  } from '@esri/arcgis-rest-request';
 import { shareItemWithGroup, unshareItemWithGroup, isItemSharedWithGroup, ISharingResponse, IGroupSharingOptions, searchGroupContent  } from '@esri/arcgis-rest-portal';
 import {
-    IItem
+    IItem,
 } from '@esri/arcgis-rest-types'
+
+import { IServerInfo } from '@esri/arcgis-rest-request';
+
 
 import {
     defaultOptions
@@ -37,8 +40,16 @@ export const getMyFavItems = async():Promise<IItem[]>=>{
 
     const {
         myFavGroupId,
-        identidyManager
     } = defaultOptions
+
+    const serverInfo: IServerInfo = {
+        hasPortal: true,
+        hasServer: false,
+        server: `${defaultOptions.ArcGISOnlineHost} "/sharing/rest`,
+        owningSystemUrl: null
+    };
+    
+    const identidyManager = ArcGISIdentityManager.fromCredential(defaultOptions.credential, serverInfo);
 
     if(!identidyManager || !myFavGroupId){
         return [];
@@ -63,8 +74,16 @@ export const toggleShareWithMyFavGroup = async(itemId:string):Promise<ISharingRe
 
     const {
         myFavGroupId,
-        identidyManager
     } = defaultOptions
+
+    const serverInfo: IServerInfo = {
+        hasPortal: true,
+        hasServer: false,
+        server: `${defaultOptions.ArcGISOnlineHost} "/sharing/rest`,
+        owningSystemUrl: null
+    };
+    
+    const identidyManager = ArcGISIdentityManager.fromCredential(defaultOptions.credential, serverInfo);
 
     if(!identidyManager){
         throw {

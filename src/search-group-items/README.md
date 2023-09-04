@@ -14,7 +14,7 @@ import {
     searchGroupItems,
     searchGroupItemsByIds,
     loadGroupCategorySchema,
-} from '@vannizhang/arcgis-rest-helper';
+} from '@hahmad/arcgis-rest-helper';
 
 // set the default Group ID that will be used for searching items
 // make sure this is called before calling searchGroupItems
@@ -96,7 +96,7 @@ searchGroupItemsByIds(options:{
 import {
     searchGroupItemsByIds,
     setDefaultOptions,
-} from '@vannizhang/arcgis-rest-helper';
+} from '@hahmad/arcgis-rest-helper';
 
 // set the default Group ID that will be used for searching items
 // make sure this is called before calling searchGroupItems

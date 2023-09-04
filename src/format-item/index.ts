@@ -85,10 +85,10 @@ const getThumbnailUrl = ({
     width?: number;
 }):string => {
     if (!thumbnail || !itemId) {
-        return '//static.arcgis.com/images/desktopapp.png';
+        return `${agolHost.replace('https:','')}/home/js/arcgisonline/css/images/default_thumb.png`;
     }
 
-    const thumbnailUrl = `${agolHost}/sharing/content/items/${itemId}/info/${thumbnail}?w=${width}`;
+    const thumbnailUrl = `${agolHost}/sharing/content/items/${itemId}/info/${thumbnail}?w=${width}&token=${defaultOptions.token}`;
 
     return thumbnailUrl;
 };
@@ -443,6 +443,6 @@ const getIconUrl = (type = '', typeKeywords: string[]):string => {
     }
 
     return imgName
-        ? `//arcgis.com/home/js/arcgisonline/img/item-types/${imgName}${size}.svg`
+        ? `${defaultOptions.ArcGISOnlineHost.replace('https:', '')}/home/js/arcgisonline/img/item-types/${imgName}${size}.svg`
         : '';
 };
