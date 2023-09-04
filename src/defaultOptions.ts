@@ -3,24 +3,24 @@ import { ICredential } from '@esri/arcgis-rest-request/dist/esm/ArcGISIdentityMa
 export const AGOL_HOST = 'https://www.arcgis.com';
 
 export type DefaultOptions = {
-    ArcGISOnlineHost?: string,
-    groupId?: string,
-    myFavGroupId?: string,
-    credential?:ICredential,
-    token?:string
-}
+    ArcGISOnlineHost?: string;
+    groupId?: string;
+    myFavGroupId?: string;
+    credential?: ICredential;
+    token?: string;
+};
 
-export let defaultOptions:DefaultOptions = {
+export let defaultOptions: DefaultOptions = {
     ArcGISOnlineHost: AGOL_HOST,
     groupId: '',
     myFavGroupId: '',
     credential: null,
-    token: ''
-}
+    token: '',
+};
 
-export const setDefaultOptions = (options:DefaultOptions)=>{
+export const setDefaultOptions = (options: DefaultOptions) => {
     defaultOptions = {
         ...defaultOptions,
-        ...options
-    }
-}
+        ...options,
+    };
+};

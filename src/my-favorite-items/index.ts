@@ -1,15 +1,17 @@
-import { ArcGISIdentityManager  } from '@esri/arcgis-rest-request';
-import { shareItemWithGroup, unshareItemWithGroup, isItemSharedWithGroup, ISharingResponse, IGroupSharingOptions, searchGroupContent  } from '@esri/arcgis-rest-portal';
+import { ArcGISIdentityManager } from '@esri/arcgis-rest-request';
 import {
-    IItem,
-} from '@esri/arcgis-rest-types'
+    shareItemWithGroup,
+    unshareItemWithGroup,
+    isItemSharedWithGroup,
+    ISharingResponse,
+    IGroupSharingOptions,
+    searchGroupContent,
+} from '@esri/arcgis-rest-portal';
+import { IItem } from '@esri/arcgis-rest-types';
 
 import { IServerInfo } from '@esri/arcgis-rest-request';
 
-
-import {
-    defaultOptions
-} from '..'
+import { defaultOptions } from '..';
 
 // let favGroupId = '';
 // let session:UserSession = null;
@@ -36,22 +38,22 @@ import {
 //     session = userSession;
 // };
 
-export const getMyFavItems = async():Promise<IItem[]>=>{
-
-    const {
-        myFavGroupId,
-    } = defaultOptions
+export const getMyFavItems = async (): Promise<IItem[]> => {
+    const { myFavGroupId } = defaultOptions;
 
     const serverInfo: IServerInfo = {
         hasPortal: true,
         hasServer: false,
         server: `${defaultOptions.ArcGISOnlineHost} "/sharing/rest`,
-        owningSystemUrl: null
+        owningSystemUrl: null,
     };
-    
-    const identidyManager = ArcGISIdentityManager.fromCredential(defaultOptions.credential, serverInfo);
 
-    if(!identidyManager || !myFavGroupId){
+    const identidyManager = ArcGISIdentityManager.fromCredential(
+        defaultOptions.credential,
+        serverInfo
+    );
+
+    if (!identidyManager || !myFavGroupId) {
         return [];
     }
 
@@ -60,53 +62,53 @@ export const getMyFavItems = async():Promise<IItem[]>=>{
             groupId: myFavGroupId,
             q: '',
             num: 1000,
-            authentication: identidyManager
-        })
-    
-        return response.results;
+            authentication: identidyManager,
+        });
 
-    } catch(err){
+        return response.results;
+    } catch (err) {
         throw err;
     }
-}
+};
 
-export const toggleShareWithMyFavGroup = async(itemId:string):Promise<ISharingResponse>=>{
-
-    const {
-        myFavGroupId,
-    } = defaultOptions
+export const toggleShareWithMyFavGroup = async (
+    itemId: string
+): Promise<ISharingResponse> => {
+    const { myFavGroupId } = defaultOptions;
 
     const serverInfo: IServerInfo = {
         hasPortal: true,
         hasServer: false,
         server: `${defaultOptions.ArcGISOnlineHost} "/sharing/rest`,
-        owningSystemUrl: null
+        owningSystemUrl: null,
     };
-    
-    const identidyManager = ArcGISIdentityManager.fromCredential(defaultOptions.credential, serverInfo);
 
-    if(!identidyManager){
+    const identidyManager = ArcGISIdentityManager.fromCredential(
+        defaultOptions.credential,
+        serverInfo
+    );
+
+    if (!identidyManager) {
         throw {
-            error: 'need to sign in before toggle sharing item with my fav group'
+            error: 'need to sign in before toggle sharing item with my fav group',
         };
     }
 
     try {
-        const options:IGroupSharingOptions = {
+        const options: IGroupSharingOptions = {
             groupId: myFavGroupId,
             id: itemId,
-            authentication: identidyManager
+            authentication: identidyManager,
         };
 
-        const isSharedWithMyFavGroup = await isItemSharedWithGroup(options)
+        const isSharedWithMyFavGroup = await isItemSharedWithGroup(options);
 
         const response: ISharingResponse = isSharedWithMyFavGroup
             ? await unshareItemWithGroup(options)
-            : await shareItemWithGroup(options)
-        
-        return response;
+            : await shareItemWithGroup(options);
 
-    } catch(err){
+        return response;
+    } catch (err) {
         throw err;
     }
-}
+};

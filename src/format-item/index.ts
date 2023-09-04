@@ -30,19 +30,18 @@ export type AgolItem = {
 
 type FormatItemOptions = {
     item: IItem;
-    agolHost?:string;
-    thumbnailWidth?:number;
-}
+    agolHost?: string;
+    thumbnailWidth?: number;
+};
 
-export const formatItem = ({ 
-    item, 
-    // agolHost = AGOL_HOST, 
-    thumbnailWidth = 200 
-}:FormatItemOptions): AgolItem => {
-
+export const formatItem = ({
+    item,
+    // agolHost = AGOL_HOST,
+    thumbnailWidth = 200,
+}: FormatItemOptions): AgolItem => {
     const { thumbnail, id, type } = item;
 
-    const { ArcGISOnlineHost} = defaultOptions;
+    const { ArcGISOnlineHost } = defaultOptions;
 
     let { typeKeywords, contentStatus } = item;
 
@@ -78,14 +77,17 @@ const getThumbnailUrl = ({
     itemId = '',
     agolHost = AGOL_HOST,
     width = 200,
-}:{
+}: {
     thumbnail?: string;
     itemId?: string;
     agolHost?: string;
     width?: number;
-}):string => {
+}): string => {
     if (!thumbnail || !itemId) {
-        return `${agolHost.replace('https:','')}/home/js/arcgisonline/css/images/default_thumb.png`;
+        return `${agolHost.replace(
+            'https:',
+            ''
+        )}/home/js/arcgisonline/css/images/default_thumb.png`;
     }
 
     const thumbnailUrl = `${agolHost}/sharing/content/items/${itemId}/info/${thumbnail}?w=${width}&token=${defaultOptions.token}`;
@@ -93,19 +95,19 @@ const getThumbnailUrl = ({
     return thumbnailUrl;
 };
 
-const isSubscriberContent = (typeKeywords: string[]):boolean => {
+const isSubscriberContent = (typeKeywords: string[]): boolean => {
     return typeKeywords.indexOf('Requires Subscription') >= 0 ? true : false;
 };
 
-const isPremiumContent = (typeKeywords: string[]):boolean => {
+const isPremiumContent = (typeKeywords: string[]): boolean => {
     return typeKeywords.indexOf('Requires Credits') >= 0 ? true : false;
 };
 
-const isAuthoritative = (contentStatus = ''):boolean => {
+const isAuthoritative = (contentStatus = ''): boolean => {
     return contentStatus === 'public_authoritative' ? true : false;
 };
 
-const getDisplayName = (itemType = '', typeKeywords: string[]):string => {
+const getDisplayName = (itemType = '', typeKeywords: string[]): string => {
     let displayName = itemType;
 
     if (itemType === 'Feature Service' || itemType === 'Feature Collection') {
@@ -168,7 +170,7 @@ const getDisplayName = (itemType = '', typeKeywords: string[]):string => {
     return displayName;
 };
 
-const getIconUrl = (type = '', typeKeywords: string[]):string => {
+const getIconUrl = (type = '', typeKeywords: string[]): string => {
     const itemType = (type && type.toLowerCase()) || '';
     // const imgDir = "../images/portal/";
     const size = '16'; //for now we only support 16x16 pixel images
@@ -443,6 +445,9 @@ const getIconUrl = (type = '', typeKeywords: string[]):string => {
     }
 
     return imgName
-        ? `${defaultOptions.ArcGISOnlineHost.replace('https:', '')}/home/js/arcgisonline/img/item-types/${imgName}${size}.svg`
+        ? `${defaultOptions.ArcGISOnlineHost.replace(
+              'https:',
+              ''
+          )}/home/js/arcgisonline/img/item-types/${imgName}${size}.svg`
         : '';
 };
